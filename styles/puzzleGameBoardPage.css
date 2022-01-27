@@ -1,1 +1,26 @@
-test
+html, body{
+
+    background-color: blanchedalmond; 
+}
+
+.bg-black{
+
+    background-color: black;
+}
+
+.bg-coral{
+
+    background-color: coral;
+}
+
+.bg-powderblue{
+
+    background-color: powderblue;
+}
+
+.bg-plum{
+
+    background-color: plum;
+}
+
+
