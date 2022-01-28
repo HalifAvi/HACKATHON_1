@@ -26,37 +26,67 @@ const allowDrop = () => {
 
 const dragDrop = () => {
 
-    event.preventDefault();
-    
     console.log("You droped!!!");
     // console.log(event.target) //  event.target is the div we want to drop into him
   
     // retrieve the data dragged  
-    let draggedPieceCurrId = event.dataTransfer.getData("text");
+    let draggedPieceCurrIdStrType = event.dataTransfer.getData("text");
+    let draggedPieceCurrIdNumType = parseInt(draggedPieceCurrIdStrType);
     //data: The current position of piece we move
     // console.log("dragged pos: ", draggedPieceCurrId) 
   
     // retrieve the current position of undragged piece
-    let undraggedPieceCurrId = event.target.id;
-    // console.log("undragged pos: ", undraggedPieceCurrId) 
+    let undraggedPieceCurrIdStrType  = event.target.id;
+    let undraggedPieceCurrIdNumType  = parseInt(undraggedPieceCurrIdStrType);
 
-    let undraggedPiece = puzzlePiecesArr[undraggedPieceCurrId];
-    puzzlePiecesArr[undraggedPieceCurrId] = puzzlePiecesArr[draggedPieceCurrId];
-    puzzlePiecesArr[draggedPieceCurrId] = undraggedPiece;
 
-    puzzlePiecesArr[draggedPieceCurrId].div.setAttribute('id',undraggedPieceCurrId);
-    puzzlePiecesArr[undraggedPieceCurrId].div.setAttribute('id',draggedPieceCurrId);
+    // Replace the places of both pieces
+    let undraggedPiece = Object.assign({}, puzzlePiecesArr[undraggedPieceCurrIdNumType]);
+    puzzlePiecesArr[undraggedPieceCurrIdNumType] = Object.assign({}, puzzlePiecesArr[draggedPieceCurrIdNumType]); 
+    puzzlePiecesArr[draggedPieceCurrIdNumType] = undraggedPiece;
 
-    puzzlePiecesArr[draggedPieceCurrId].div.currPosition = undraggedPieceCurrId;
-    puzzlePiecesArr[undraggedPieceCurrId].div.currPosition = draggedPieceCurrId;
+    // Change the div attribute according to the new position after replacement
+    // We can't give the same id name to two elements so we have to remove first
+    puzzlePiecesArr[draggedPieceCurrIdNumType].div.setAttribute('id',"");
+    puzzlePiecesArr[undraggedPieceCurrIdNumType].div.setAttribute('id',"");
+    puzzlePiecesArr[draggedPieceCurrIdNumType].div.setAttribute('id',draggedPieceCurrIdStrType);
+    puzzlePiecesArr[undraggedPieceCurrIdNumType].div.setAttribute('id',undraggedPieceCurrIdStrType);
+
+
+    puzzlePiecesArr[draggedPieceCurrIdNumType].currPosition = draggedPieceCurrIdNumType;
+    puzzlePiecesArr[undraggedPieceCurrIdNumType].currPosition = undraggedPieceCurrIdNumType;
+
+    console.log(puzzlePiecesArr)
+
 
     //console.log(puzzlePiecesArr[draggedPieceCurrId])
     //console.log(puzzlePiecesArr[undraggedPieceCurrId])
 
-    console.log(puzzlePiecesArr)
-
     removePuzzlePiecesDivsFromMainDiv();
     appendPuzzlePiecesDivsToMainDiv();
+
+    if(isUserFinishThePuzzle()){
+
+        console.log("YEAHHHHHHHHHHHHHHHHHHHHHHH!!!")
+    }
+
+    event.preventDefault();
+}
+
+const isUserFinishThePuzzle = () => {
+
+    let isFinish = true;
+
+    for(let i=0; i<level*level; i++){
+
+        if(puzzlePiecesArr[i].currPosition !== puzzlePiecesArr[i].puzzlePieceNum){
+
+            isFinish = false;
+            break;
+        }
+    }  
+
+    return isFinish;
 }
 
 const removePuzzlePiecesDivsFromMainDiv = () =>{
@@ -75,9 +105,9 @@ const displayPuzzleBoardGame = () => {
         for(j=0; j<level; j++){
 
             let puzzlePieceDiv = document.createElement('div');
-            puzzlePieceDiv.style.width = "150px";
-            puzzlePieceDiv.style.height = "100px";
-            puzzlePieceDiv.style.border = "2px solid lightgray";
+            puzzlePieceDiv.style.width = "200px"; // 150 // 300 // 200 // 150
+            puzzlePieceDiv.style.height = "120px"; // 100 // 200 // 120 //  100
+            puzzlePieceDiv.style.border = "1px solid lightgray";
             puzzlePieceDiv.style.backgroundRepeat = "no-repeat";
             puzzlePieceDiv.style.backgroundSize = "cover";
             puzzlePieceDiv.style.backgroundPosition = "center";
@@ -91,14 +121,16 @@ const displayPuzzleBoardGame = () => {
             let randomPosition = getRandomNumToPuzzlePieceLocation();
             puzzlePieceDiv.setAttribute('id',randomPosition);
 // ${imageNoToDisplay}
-            puzzlePieceDiv.style.backgroundImage = `url(../images/medium/animals/0/${puzzlePieceNum}.jpg)`;
+            puzzlePieceDiv.style.backgroundImage = `url(../images/medium/food/0/${puzzlePieceNum}.jpg)`;
 
-            puzzlePiecesArr[randomPosition] = {'div': puzzlePieceDiv, 'originRowIdx': i, 'originColIdx': j,
-            'currRowIdx': i, 'currColIdx': j, 'puzzlePieceNum': puzzlePieceNum++, 'currPosition': randomPosition};
+            puzzlePiecesArr[randomPosition] = {'div': puzzlePieceDiv, 'puzzlePieceNum': puzzlePieceNum++,
+                                               'currPosition': randomPosition}; 
         }
-    }
+    } // 'currRowIdx': i, 'currColIdx': j,  'originRowIdx': i, 'originColIdx': j
 
     appendPuzzlePiecesDivsToMainDiv();
+
+    console.log(puzzlePiecesArr)
 }
 
 const getRandomNumToPuzzlePieceLocation = () => {
