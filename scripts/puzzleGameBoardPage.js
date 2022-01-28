@@ -1,4 +1,4 @@
-const level = 5;
+const level = 7;
 let puzzlePiecesArr = [];
 let puzzlePieceNum = 0;
 const easy = 3;
@@ -28,7 +28,7 @@ const displayPuzzleBoardGame = () => {
 
             let randomPosition = getRandomNumToPuzzlePieceLocation();
 // ${imageNoToDisplay}
-            puzzlePieceDiv.style.backgroundImage = `url(../images/medium/animals/0/${puzzlePieceNum}.jpg)`;
+            puzzlePieceDiv.style.backgroundImage = `url(../images/hard/animals/0/${puzzlePieceNum}.jpg)`;
 
             puzzlePiecesArr[randomPosition] = {'div':puzzlePieceDiv, 'originRowIdx': i, 'originColIdx': j, 'currRowIdx': i, 'currColIdx': j, 'puzzlePieceNum': puzzlePieceNum++};
         }
@@ -54,8 +54,8 @@ const getRandomImageToDisplay = () => {
 
     let randomImageNum;
 
-    // Returns a random integer from 0 to 2:
-    randomImageNum = Math.floor(Math.random() * (3));
+    // Returns a random integer from 0 to 1:
+    randomImageNum = Math.floor(Math.random() * (2));
     
     return randomImageNum;
 }
@@ -90,6 +90,8 @@ const setGridAccordingToLevel = (whereToAppendPuzzleBoard) => {
     }
 
     whereToAppendPuzzleBoard.setAttribute('id',idName);
+
+    console.log(whereToAppendPuzzleBoard)
 }
 
 
