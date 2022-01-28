@@ -1,83 +1,119 @@
-const level = 5;
+/**************************GLOBAL VARIABELS******************************/
+
 let puzzlePiecesArr = [];
 let puzzlePieceNum = 0;
-const easy = 3;
-const medium = 5;
-const hard =7;
 let whereToAppendPuzzleBoard = document.querySelector("#col1");
 
 
+/**************************GLOBAL CONST VARIABELS******************************/
+
+const numOfImgsInEachCategory = 2;
+const levels = [{level: "easy", rank: 3, numOfPieces: 9},
+                {level: "medium", rank: 5, numOfPieces: 25},
+                {level: "hard", rank: 7, numOfPieces: 49}];
+
+
+const userLevel = "easy";
+const category = "views";
+
+
+
+/**************************EVENTS FUNCTIONS******************************/
+
+
+// Doing this function when start drag a puzzle piece
 const dragStart = () => {
 
-    //set the data to be dragged
-    // console.log("target:",  event.target)
-    // console.log("id: ",  event.target.id ) // id: number of image (origin place)
-
-    event.dataTransfer.setData("text", event.target.id); // The current position of piece
+    event.dataTransfer.setData("text", event.target.id); // The current position of dragged piece
 }
 
-// called also 'when over'
+
+// Doing this function when dragging a puzzle piece hover other piece (called also 'when over')
 const allowDrop = () => {
 
-    console.log("you now hover me!!!"); // Just for TEST
     event.preventDefault(); // Necessary. Allows us to drop.
 }
 
 
-const dragDrop = () => {
+// Doing this function when droping one puzzle piece on other
+const dragDrop = event => {
 
-    console.log("You droped!!!");
-    // console.log(event.target) //  event.target is the div we want to drop into him
-  
-    // retrieve the data dragged  
-    let draggedPieceCurrIdStrType = event.dataTransfer.getData("text");
-    let draggedPieceCurrIdNumType = parseInt(draggedPieceCurrIdStrType);
-    //data: The current position of piece we move
-    // console.log("dragged pos: ", draggedPieceCurrId) 
-  
-    // retrieve the current position of undragged piece
-    let undraggedPieceCurrIdStrType  = event.target.id;
-    let undraggedPieceCurrIdNumType  = parseInt(undraggedPieceCurrIdStrType);
+    changeBetweenTwoPuzzlePieces(event);
+
+    redrawPuzzleBoard();
+
+    announceWhenUserCompleteThePuzzle();
+
+    event.preventDefault();
+}
 
 
-    // Replace the places of both pieces
-    let undraggedPiece = Object.assign({}, puzzlePiecesArr[undraggedPieceCurrIdNumType]);
-    puzzlePiecesArr[undraggedPieceCurrIdNumType] = Object.assign({}, puzzlePiecesArr[draggedPieceCurrIdNumType]); 
-    puzzlePiecesArr[draggedPieceCurrIdNumType] = undraggedPiece;
-
-    // Change the div attribute according to the new position after replacement
-    // We can't give the same id name to two elements so we have to remove first
-    puzzlePiecesArr[draggedPieceCurrIdNumType].div.setAttribute('id',"");
-    puzzlePiecesArr[undraggedPieceCurrIdNumType].div.setAttribute('id',"");
-    puzzlePiecesArr[draggedPieceCurrIdNumType].div.setAttribute('id',draggedPieceCurrIdStrType);
-    puzzlePiecesArr[undraggedPieceCurrIdNumType].div.setAttribute('id',undraggedPieceCurrIdStrType);
+/*************************FUNCTIONS************************************/
 
 
-    puzzlePiecesArr[draggedPieceCurrIdNumType].currPosition = draggedPieceCurrIdNumType;
-    puzzlePiecesArr[undraggedPieceCurrIdNumType].currPosition = undraggedPieceCurrIdNumType;
-
-    console.log(puzzlePiecesArr)
-
-
-    //console.log(puzzlePiecesArr[draggedPieceCurrId])
-    //console.log(puzzlePiecesArr[undraggedPieceCurrId])
-
-    removePuzzlePiecesDivsFromMainDiv();
-    appendPuzzlePiecesDivsToMainDiv();
+// This function tell the user if he won the game
+const announceWhenUserCompleteThePuzzle = () => {
 
     if(isUserFinishThePuzzle()){
 
         console.log("YEAHHHHHHHHHHHHHHHHHHHHHHH!!!")
     }
-
-    event.preventDefault();
 }
 
+
+// This function display the puzzle board again
+const redrawPuzzleBoard = () => {
+
+    removePuzzlePiecesDivsFromMainDiv();
+    appendPuzzlePiecesDivsToMainDiv();
+}
+
+
+// This function change positions between 2 puzzle pieces
+const changeBetweenTwoPuzzlePieces = event => {
+
+    /////retriveTheIdsOfDraggedAndUndraggedPuzzlePieces
+
+    // retrieve the data dragged  
+    let draggedPieceCurrIdStrType = event.dataTransfer.getData("text");
+    let draggedPieceCurrIdNumType = parseInt(draggedPieceCurrIdStrType);
+
+    // retrieve the current position of undragged piece
+    let undraggedPieceCurrIdStrType  = event.target.id;
+    let undraggedPieceCurrIdNumType  = parseInt(undraggedPieceCurrIdStrType);
+
+    // The user want to change pieces positions so replace the places of both pieces in the array  
+    let undraggedPiece = Object.assign({}, puzzlePiecesArr[undraggedPieceCurrIdNumType]);
+    puzzlePiecesArr[undraggedPieceCurrIdNumType] = Object.assign({}, puzzlePiecesArr[draggedPieceCurrIdNumType]); 
+    puzzlePiecesArr[draggedPieceCurrIdNumType] = undraggedPiece;
+
+    changeThePosIdOfTwoDivs(draggedPieceCurrIdNumType, undraggedPieceCurrIdNumType, draggedPieceCurrIdStrType, undraggedPieceCurrIdStrType);
+}
+
+
+// This function change the position ID of two puzzle pieces
+const changeThePosIdOfTwoDivs = (draggedPieceCurrIdNumType, undraggedPieceCurrIdNumType,
+                                 draggedPieceCurrIdStrType, undraggedPieceCurrIdStrType) => {
+
+// Change the div attribute according to the new position after replacement
+// We can't give the same id name to two elements so we have to remove first
+puzzlePiecesArr[draggedPieceCurrIdNumType].div.setAttribute('id',"");
+puzzlePiecesArr[undraggedPieceCurrIdNumType].div.setAttribute('id',"");
+puzzlePiecesArr[draggedPieceCurrIdNumType].div.setAttribute('id',draggedPieceCurrIdStrType);
+puzzlePiecesArr[undraggedPieceCurrIdNumType].div.setAttribute('id',undraggedPieceCurrIdStrType);
+
+puzzlePiecesArr[draggedPieceCurrIdNumType].currPosition = draggedPieceCurrIdNumType;
+puzzlePiecesArr[undraggedPieceCurrIdNumType].currPosition = undraggedPieceCurrIdNumType;
+}
+
+
+// This function return true if the user completed the game, opposite if not
 const isUserFinishThePuzzle = () => {
 
-    let isFinish = true;
+    let isFinish = true;  
+    let numOfPieces = (levels.find(obj => obj.level === userLevel)).numOfPieces;
 
-    for(let i=0; i<level*level; i++){
+    for(let i=0; i<numOfPieces; i++){
 
         if(puzzlePiecesArr[i].currPosition !== puzzlePiecesArr[i].puzzlePieceNum){
 
@@ -89,97 +125,139 @@ const isUserFinishThePuzzle = () => {
     return isFinish;
 }
 
+
+// This function remove all puzzle pieces from board
 const removePuzzlePiecesDivsFromMainDiv = () =>{
 
     whereToAppendPuzzleBoard.innerHTML = '';
 }
 
 
-
+// This function display the puzzle board according to the user parameters
 const displayPuzzleBoardGame = () => {
 
-    let imageNoToDisplay = getRandomImageToDisplay();
+    let imageNumToDisplay = getRandomImageToDisplay();
+    let numOfRowsAndCols = (levels.find(obj => obj.level === userLevel)).rank
 
-    for(let i=0; i<level; i++) {
+    for(let i=0; i<numOfRowsAndCols; i++) {
 
-        for(j=0; j<level; j++){
+        for(j=0; j<numOfRowsAndCols; j++){
 
             let puzzlePieceDiv = document.createElement('div');
-            puzzlePieceDiv.style.width = "200px"; // 150 // 300 // 200 // 150
-            puzzlePieceDiv.style.height = "120px"; // 100 // 200 // 120 //  100
-            puzzlePieceDiv.style.border = "1px solid lightgray";
-            puzzlePieceDiv.style.backgroundRepeat = "no-repeat";
-            puzzlePieceDiv.style.backgroundSize = "cover";
-            puzzlePieceDiv.style.backgroundPosition = "center";
 
-            puzzlePieceDiv.setAttribute('draggable','true');
-            puzzlePieceDiv.classList.add('puzzlePiece'); 
-            puzzlePieceDiv.addEventListener('dragstart', dragStart);
-            puzzlePieceDiv.addEventListener('dragover', allowDrop);
-            puzzlePieceDiv.addEventListener('drop', dragDrop); // When we drop on him other rectangle
+            setVisualtyToPuzzlePieceDiv(puzzlePieceDiv);
 
-            let randomPosition = getRandomNumToPuzzlePieceLocation();
-            puzzlePieceDiv.setAttribute('id',randomPosition);
-// ${imageNoToDisplay}
-            puzzlePieceDiv.style.backgroundImage = `url(../images/medium/food/0/${puzzlePieceNum}.jpg)`;
+            addEventListenersToPuzzlePieceDiv(puzzlePieceDiv);
 
-            puzzlePiecesArr[randomPosition] = {'div': puzzlePieceDiv, 'puzzlePieceNum': puzzlePieceNum++,
-                                               'currPosition': randomPosition}; 
+            pushPuzzlePieceToObjArr(puzzlePieceDiv, imageNumToDisplay);
         }
-    } // 'currRowIdx': i, 'currColIdx': j,  'originRowIdx': i, 'originColIdx': j
+    } 
 
     appendPuzzlePiecesDivsToMainDiv();
-
-    console.log(puzzlePiecesArr)
 }
 
+
+// This function insert single element to obj array (all the puzzle pieces)
+const pushPuzzlePieceToObjArr = (puzzlePieceDiv, imageNumToDisplay) => {
+
+let randomPosition = getRandomNumToPuzzlePieceLocation();
+puzzlePieceDiv.setAttribute('id',randomPosition);
+    
+puzzlePieceDiv.style.backgroundImage = `url(../images/${userLevel}/${category}/${imageNumToDisplay}/${puzzlePieceNum}.jpg)`;
+    
+puzzlePiecesArr[randomPosition] = {'div': puzzlePieceDiv, 'puzzlePieceNum': puzzlePieceNum++,
+                                   'currPosition': randomPosition}; 
+}
+
+
+// This function handle all drag and drop events
+const addEventListenersToPuzzlePieceDiv = puzzlePieceDiv => {
+
+    puzzlePieceDiv.setAttribute('draggable','true');
+    puzzlePieceDiv.addEventListener('dragstart', dragStart);
+    puzzlePieceDiv.addEventListener('dragover', allowDrop);
+    puzzlePieceDiv.addEventListener('drop', dragDrop); // When we drop on him other rectangle
+}
+
+
+// This function set the visual aspect for the pieces according to the user choise
+const setVisualtyToPuzzlePieceDiv = puzzlePieceDiv => {
+
+    let idName;
+    puzzlePieceDiv.classList.add("puzzlePiece"); 
+
+    switch(userLevel){
+
+        case 'easy' : idName = 'easyLevelSizePuzzlePiece';
+            break;
+
+        case 'medium' : idName = 'mediumLevelSizePuzzlePiece';
+            break;
+
+        case 'hard' : idName = 'hardLevelSizePuzzlePiece'; 
+            break;
+    }
+
+    puzzlePieceDiv.classList.add('id',idName);
+}
+
+
+// This function return a random number consider as a rando, location for puzzle piece on board
 const getRandomNumToPuzzlePieceLocation = () => {
 
     let randomPosition;
+    let numOfPieces = (levels.find(obj => obj.level === userLevel)).numOfPieces;
 
     do{
         // Returns a random integer from 0 to level-1:
-        randomPosition = Math.floor(Math.random() * (level*level));
+        randomPosition = Math.floor(Math.random() * numOfPieces);
     
     }while(puzzlePiecesArr[randomPosition] !== undefined);
 
     return randomPosition;
 }
 
+
+// This function return a random number consider as the image to display
 const getRandomImageToDisplay = () => {
 
     let randomImageNum;
 
-    // Returns a random integer from 0 to 1:
-    randomImageNum = Math.floor(Math.random() * (2));
+    // Returns a random integer from 0 to numOfImgsInEachCategory-1
+    randomImageNum = Math.floor(Math.random() * (numOfImgsInEachCategory));
     
     return randomImageNum;
 }
 
 
+// This function appending the puzzle pieces div's to the main div
 const appendPuzzlePiecesDivsToMainDiv = () => {
 
     setGridAccordingToLevel(whereToAppendPuzzleBoard);
+
+    let numOfPieces = (levels.find(obj => obj.level === userLevel)).numOfPieces;
    
-    for(let i=0; i<level*level; i++){
+    for(let i=0; i<numOfPieces; i++){
 
         whereToAppendPuzzleBoard.appendChild(puzzlePiecesArr[i].div);
     }
 }
 
-const setGridAccordingToLevel = (whereToAppendPuzzleBoard) => {
+
+// This function set the correct grid board according to user choise
+const setGridAccordingToLevel = whereToAppendPuzzleBoard => {
 
     let idName;
 
-    switch(level){
+    switch(userLevel){
 
-        case easy : idName = 'easyPuzzleGridBoard';
+        case 'easy' : idName = 'easyPuzzleGridBoard';
             break;
 
-        case medium : idName = 'mediumPuzzleGridBoard';
+        case 'medium' : idName = 'mediumPuzzleGridBoard';
             break;
 
-        case hard : idName = 'hardPuzzleGridBoard'; 
+        case 'hard' : idName = 'hardPuzzleGridBoard'; 
             break;
     }
 
@@ -187,6 +265,7 @@ const setGridAccordingToLevel = (whereToAppendPuzzleBoard) => {
 }
 
 
+/**************************START OF PROGRAM**************************************/
 
 displayPuzzleBoardGame();
 
