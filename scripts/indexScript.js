@@ -1,25 +1,27 @@
 
-let puzzleIcon = document.getElementById('puzzleImage');
 
-puzzleIcon.onmousedown = function() {
-
-
-    puzzleIcon.style.backgroundColor = "yellow";
-
-};
+let takeToCategoryChoiseScreen = () => {
 
 
 
+    console.log(event.target)
+
+}
 
 
+let changeIconColor = () => {
+
+    puzzleIcon.classList.toggle("bg-yellow");
+}
 
 
+let puzzleIcon = document.getElementById('puzzleIcon');
+console.log(puzzleIcon)
 
-// changePuzzleIconBackgroundColor
+puzzleIcon.addEventListener('mouseover', changeIconColor)
+puzzleIcon.addEventListener('mouseout', changeIconColor)
+puzzleIcon.addEventListener('click', takeToCategoryChoiseScreen)
 
-// displayNextPage
-
-// bg-yellow
 
 
 
