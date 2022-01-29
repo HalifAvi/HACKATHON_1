@@ -1,24 +1,25 @@
-let puzzleIcon = document.querySelector('img#puzzleImage');
+
+let puzzleIcon = document.getElementById('puzzleImage');
+
+puzzleIcon.onmousedown = function() {
 
 
-const changePuzzleIconBackgroundColor = () => {
+    puzzleIcon.style.backgroundColor = "yellow";
 
-    puzzleIcon.setAttribute('class','bg-yellow');
-    console.log(puzzleIcon)
-}
+};
 
 
-const displayNextPage = () => {
 
-    console.log("avi");
 
-}
 
- 
-puzzleIcon.addEventListener('click', displayNextPage);
 
-console.log(puzzleIcon)
 
+
+// changePuzzleIconBackgroundColor
+
+// displayNextPage
+
+// bg-yellow
 
 
 
