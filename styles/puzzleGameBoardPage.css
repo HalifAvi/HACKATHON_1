@@ -25,13 +25,38 @@ html, body{
     background-color: plum;
 }
 
-.puzzlePiece{
+.puzzlePieceBeforeWin{
 
     border: 1px solid lightgray;
     background-repeat: no-repeat;
     background-size: cover;
     background-position: center;
-}      
+}  
+
+
+.puzzlePieceAfterWin{
+
+    border: 0px solid lightgray;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}  
+
+.blur{
+    
+    filter: blur(5px);
+}
+
+.shadow{
+
+    box-shadow: 0px 0px 20px white;
+}
+
+.imageCompleteDisplay{
+
+    width: 70vw;
+    height: 85vh;
+}
 
 .easyLevelSizePuzzlePiece{
 
