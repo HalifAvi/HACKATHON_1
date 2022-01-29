@@ -2,6 +2,7 @@
 
 let puzzlePiecesArr = [];
 let puzzlePieceNum = 0;
+let imageNumToDisplay;
 let whereToAppendPuzzleBoard = document.querySelector("#col1");
 
 
@@ -14,7 +15,7 @@ const levels = [{level: "easy", rank: 3, numOfPieces: 9},
 
 
 const userLevel = "easy";
-const category = "views";
+const category = "food";
 
 
 
@@ -56,8 +57,56 @@ const announceWhenUserCompleteThePuzzle = () => {
 
     if(isUserFinishThePuzzle()){
 
-        console.log("YEAHHHHHHHHHHHHHHHHHHHHHHH!!!")
+        makePicecsDisableToMove();
+        startConfetti();           
     }
+}
+
+
+// This function stop confetti on screen
+const stopConfetti = () => {
+
+    setTimeout(function(){
+        confetti.stop();
+    },5000)
+}
+
+
+// This function start confetti on screen
+const startConfetti = () => {
+    setTimeout(function(){
+        confetti.start();
+    }, 1000);
+}
+
+
+// Make puzzle pieces undraggable
+const makePicecsDisableToMove = () => {
+
+    let numOfPieces = (levels.find(obj => obj.level === userLevel)).numOfPieces;
+
+    for(let i=0; i<numOfPieces; i++){
+
+        puzzlePiecesArr[i].div.classList.add('puzzlePieceAfterWin');
+        puzzlePiecesArr[i].div.setAttribute('draggable','false');
+        puzzlePiecesArr[i].div.removeEventListener('dragstart', dragStart);
+        puzzlePiecesArr[i].div.removeEventListener('dragover', allowDrop);
+        puzzlePiecesArr[i].div.removeEventListener('drop', dragDrop);
+    }
+
+    makePuzzlePiecesBlur(numOfPieces);
+}
+
+
+// make puzzle pieces blur
+const makePuzzlePiecesBlur = numOfPieces => {
+
+    setTimeout(function(){
+         
+        for(let i=0; i<numOfPieces; i++){
+    
+            puzzlePiecesArr[i].div.classList.add('blur');
+        }},1000)
 }
 
 
@@ -136,7 +185,7 @@ const removePuzzlePiecesDivsFromMainDiv = () =>{
 // This function display the puzzle board according to the user parameters
 const displayPuzzleBoardGame = () => {
 
-    let imageNumToDisplay = getRandomImageToDisplay();
+    imageNumToDisplay = getRandomImageToDisplay();
     let numOfRowsAndCols = (levels.find(obj => obj.level === userLevel)).rank
 
     for(let i=0; i<numOfRowsAndCols; i++) {
@@ -184,7 +233,7 @@ const addEventListenersToPuzzlePieceDiv = puzzlePieceDiv => {
 const setVisualtyToPuzzlePieceDiv = puzzlePieceDiv => {
 
     let idName;
-    puzzlePieceDiv.classList.add("puzzlePiece"); 
+    puzzlePieceDiv.classList.add("puzzlePieceBeforeWin"); 
 
     switch(userLevel){
 
@@ -268,6 +317,7 @@ const setGridAccordingToLevel = whereToAppendPuzzleBoard => {
 /**************************START OF PROGRAM**************************************/
 
 displayPuzzleBoardGame();
+announceWhenUserCompleteThePuzzle();
 
 
 
