@@ -25,15 +25,31 @@ html, body{
     background-color: plum;
 }
 
-/* .puzzlePiece{
+.puzzlePiece{
 
-    width: "480px";
-    height: "300px";
-    border: "2px solid lightgray";
-    background-repeat: "no-repeat";
-    background-size: "cover";
-    background-position:"center";
-} */
+    border: 1px solid lightgray;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+}      
+
+.easyLevelSizePuzzlePiece{
+
+    width: 300px; 
+    height: 200px; 
+}
+
+.mediumLevelSizePuzzlePiece{
+
+    width: 200px; 
+    height: 120px; 
+}
+
+.hardLevelSizePuzzlePiece{
+
+    width: 150px; 
+    height: 100px; 
+}
 
 
 #easyPuzzleGridBoard{
