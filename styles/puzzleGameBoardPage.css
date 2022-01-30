@@ -149,7 +149,7 @@ section#bounce {
     top: 2vh;
     display: inline-block;
     -webkit-animation: bounce 0.3s ease infinite alternate;
-    font-size: 150px;
+    font-size: 130px;
     font-family: 'Balsamiq Sans', cursive;
     color: #8DA336;
     text-shadow: 0 1px 0 #ccc, 0 2px 0 #ccc, 0 3px 0 #ccc, 0 4px 0 #ccc,
