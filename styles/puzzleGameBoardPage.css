@@ -2,28 +2,16 @@
 
 html, body{
 
-    background-color: blanchedalmond; 
+    margin: 0;
+    padding: 0;
 }
 
-.bg-black{
+div#rowContainer{
 
-    background-color: black;
+    box-shadow: 0 0 10px #FFFCAA, 0 0 40px #D4D16A, 0 0 80px #AAA639;
+    width: 900px;
 }
 
-.bg-coral{
-
-    background-color: coral;
-}
-
-.bg-powderblue{
-
-    background-color: powderblue;
-}
-
-.bg-plum{
-
-    background-color: plum;
-}
 
 .puzzlePieceBeforeWin{
 
@@ -66,13 +54,13 @@ html, body{
 
 .mediumLevelSizePuzzlePiece{
 
-    width: 200px; 
+    width: 180px; 
     height: 120px; 
 }
 
 .hardLevelSizePuzzlePiece{
 
-    width: 150px; 
+    width: 130px; 
     height: 100px; 
 }
 
@@ -90,9 +78,6 @@ html, body{
     display: grid;
 	grid-template-columns: repeat(5,1fr);
 	grid-template-rows: repeat(5,1fr);
-    /* margin: 10px; */
-	/* width: 50px;
-	height: 50px; */
 }
 
 #hardPuzzleGridBoard{
@@ -102,9 +87,284 @@ html, body{
 	grid-template-rows: repeat(7,1fr);
 } 
 
+div#col2{
+
+  position: fixed;
+  top: 5px;
+  right:40px;
+  font-size: 120px;
+  font-family: 'Balsamiq Sans', cursive;
+  color: #FFFCAA;
+  filter: drop-shadow(-3px -3px 2px rgba(255,255,255,0.3))
+          drop-shadow(5px 5px 5px rgba(0,0,0,0.2))
+          drop-shadow(15px 15px 15px rgba(0,0,0,0.2))
+}
+
+
+/*For navigation bar*/
+ul{
+
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: "Luckiest Guy", cursive;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  padding-right: 5px;
+  text-align: left;
+  padding-top: 40px;
+
+} 
+
+.navigation{
+
+  position: fixed;
+  top: 160px;
+  right: 0px;
+  width: 50px;
+  height: 75vh;
+  border-radius: 10px;
+  box-sizing: initial;
+  border-left: 5px solid #4d5bf9;
+  background-color: #7579ff;
+  transition: width 0.5s;
+  overflow-x: hidden;
+}
+
+.navigation.active{
+
+  width: 300px;
+}
+
+.navigation ul li{
+
+  position: relative;
+  list-style: none;
+  width: 100%;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+.navigation ul li.active{
+
+  background: white;
+}
+
+.navigation ul li a{
+
+  position: relative;
+  display: block;
+  width: 300px;
+  height: 70px;
+  display: flex;
+  text-decoration: none;
+  color: #fff;
+  font-size: 30px;
+}
+
+.navigation ul li.active a{
+
+  color: #333;
+}
+
+.navigation ul li a .icon{
+
+  position: relative;
+  display: block;
+  min-width: 60px;
+  height: 100px;
+  text-align: center;
+}
+
+.navigation ul li a .icon .title{
+
+  position: relative;
+  display: block;
+  padding-left: 10px;
+  height: 60px;
+  white-space: normal;
+}
+
+
+.toggle{
+
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background: #7579ff;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.toggle.active{
+
+ background: red;
+}
+
+.toggle ion-icon{
+
+  position: absolute;
+  color: white;
+  font-size: 34px;
+  display: none;
+}
+
+.toggle ion-icon.open,
+.toggle.active ion-icon.close{
+
+  display: block;
+
+}
+
+.toggle.active ion-icon.open,
+.toggle ion-icon.close{
+
+  display: none;
+}
 
 
 
 
 
 
+
+
+
+
+/*FOR BOUNCE TEXT ANIMATION - WINNER ANNOUNCEMENT! */
+
+section#bounce {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    width: 100%;
+    height: 100%;
+    background-color: skyblue;
+    background-image: -webkit-linear-gradient(90deg, skyblue 0%, steelblue 100%);
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    overflow: hidden;
+    font-family: "Luckiest Guy", cursive;
+    -webkit-font-smoothing: antialiased;
+  }
+  
+  ::selection {
+    background: transparent;
+  }
+  /* CLOUDS */
+  section#bounce:before {
+    content: "";
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    width: 0;
+    height: 0;
+    margin: auto;
+    border-radius: 100%;
+    background: transparent;
+    display: block;
+    box-shadow: 0 0 150px 100px rgba(255, 255, 255, 0.6),
+      200px 0 200px 150px rgba(255, 255, 255, 0.6),
+      -250px 0 300px 150px rgba(255, 255, 255, 0.6),
+      550px 0 300px 200px rgba(255, 255, 255, 0.6),
+      -550px 0 300px 200px rgba(255, 255, 255, 0.6);
+  }
+  /* JUMP */
+  h1 {
+    cursor: default;
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100px;
+    margin: auto;
+    display: block;
+    text-align: center;
+  }   
+  
+  h1 span {
+  
+    position: relative;
+    top: 2vh;
+    display: inline-block;
+    -webkit-animation: bounce 0.3s ease infinite alternate;
+    font-size: 130px;
+    font-family: 'Balsamiq Sans', cursive;
+    color: #8DA336;
+    text-shadow: 0 1px 0 #ccc, 0 2px 0 #ccc, 0 3px 0 #ccc, 0 4px 0 #ccc,
+      0 5px 0 #ccc, 0 6px 0 transparent, 0 7px 0 transparent, 0 8px 0 transparent,
+      0 9px 0 transparent, 0 10px 10px rgba(0, 0, 0, 0.4);
+  }
+  
+  h1 span:nth-child(2) {
+    -webkit-animation-delay: 0.1s;
+  }
+  
+  h1 span:nth-child(3) {
+    -webkit-animation-delay: 0.2s;
+  }
+  
+  h1 span:nth-child(4) {
+    -webkit-animation-delay: 0.3s;
+  }
+  
+  h1 span:nth-child(5) {
+    -webkit-animation-delay: 0.4s;
+  }
+  
+  h1 span:nth-child(6) {
+    -webkit-animation-delay: 0.5s;
+  }
+  
+  h1 span:nth-child(7) {
+    -webkit-animation-delay: 0.6s;
+  }
+  
+  h1 span:nth-child(8) {
+    -webkit-animation-delay: 0.2s;
+  }
+  
+  h1 span:nth-child(9) {
+    -webkit-animation-delay: 0.3s;
+  }
+  
+  h1 span:nth-child(10) {
+    -webkit-animation-delay: 0.4s;
+  }
+  
+  h1 span:nth-child(11) {
+    -webkit-animation-delay: 0.5s;
+  }
+  
+  h1 span:nth-child(12) {
+    -webkit-animation-delay: 0.6s;
+  }
+  
+  h1 span:nth-child(13) {
+    -webkit-animation-delay: 0.7s;
+  }
+  
+  h1 span:nth-child(14) {
+    -webkit-animation-delay: 0.8s;
+  }
+  
+  /* ANIMATION */
+  @-webkit-keyframes bounce {
+    100% {
+      top: -2vh;
+      text-shadow: 0 1px 0 #ccc, 0 2px 0 #ccc, 0 3px 0 #ccc, 0 4px 0 #ccc,
+        0 5px 0 #ccc, 0 6px 0 #ccc, 0 7px 0 #ccc, 0 8px 0 #ccc, 0 9px 0 #ccc,
+        0 50px 25px rgba(0, 0, 0, 0.2);
+    }
+  }
+  
