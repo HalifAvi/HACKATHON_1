@@ -122,27 +122,48 @@ const startTimer = () => {
     }, 1000);
 }
 
+// This function handle the all set for nav bar
+const setNavBar = () => {
+
+    setNavBarMarkedCategories();
+    setInteractionBetweenXandNavBar();
+
+}
 
 
-// This function turn on the audio when the user win and complete the puzzle
-// const turnOnWinnerAudio = () => {
+const setInteractionBetweenXandNavBar = () => {
+
+    let menuToggle = document.querySelector('.toggle');
+    let navigation = document.querySelector('.navigation')
+
+    menuToggle.onclick = function() {
+
+        menuToggle.classList.toggle('active');
+        navigation.classList.toggle('active');
+    }
+}
 
 
-//     // let mp3Source = document.createElement('source');
+// This function set white mark when mouse hover the nav bar categories
+const setNavBarMarkedCategories = () => {
 
-
+    let list = document.querySelectorAll('.list');
     
-//     window.onload = function(){
+    for(let i=0; i< list.length; i++){
 
-//        document.getElementById("applause").play();
-//     }
+        list[i].onmouseover = function() {
 
-//     // mp3Audio.setAttribute('muted','true');
-//     // mp3Audio.play();
-//     // mp3Audio.setAttribute('muted','false');
-//     // mp3Audio.play();
-    
-// }
+            let j = 0;
+            
+            while(j < list.length){
+
+                list[j++].className = 'list';
+            }
+        
+            list[i].className = 'list active';
+        }
+    }
+}
 
 
 // This function display message if user is a winner or not
@@ -435,6 +456,7 @@ const setGridAccordingToLevel = whereToAppendPuzzleBoard => {
 /**************************START OF PROGRAM**************************************/
 
 displayPuzzleBoardGame();
+setNavBar();
 startTimer();
 announceWhenUserCompleteThePuzzle();
 

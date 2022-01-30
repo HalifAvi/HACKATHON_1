@@ -101,6 +101,143 @@ div#col2{
 }
 
 
+/*For navigation bar*/
+ul{
+
+  margin: 0px;
+  padding: 0px;
+  box-sizing: border-box;
+  font-family: "Luckiest Guy", cursive;
+  position: absolute;
+  top: 0px;
+  left: 0px;
+  padding-right: 5px;
+  text-align: left;
+  padding-top: 40px;
+
+} 
+
+.navigation{
+
+  position: fixed;
+  top: 160px;
+  right: 0px;
+  width: 50px;
+  height: 75vh;
+  border-radius: 10px;
+  box-sizing: initial;
+  border-left: 5px solid #4d5bf9;
+  background-color: #7579ff;
+  transition: width 0.5s;
+  overflow-x: hidden;
+}
+
+.navigation.active{
+
+  width: 300px;
+}
+
+.navigation ul li{
+
+  position: relative;
+  list-style: none;
+  width: 100%;
+  border-top-left-radius: 20px;
+  border-bottom-left-radius: 20px;
+}
+
+.navigation ul li.active{
+
+  background: white;
+}
+
+.navigation ul li a{
+
+  position: relative;
+  display: block;
+  width: 300px;
+  height: 70px;
+  display: flex;
+  text-decoration: none;
+  color: #fff;
+  font-size: 30px;
+}
+
+.navigation ul li.active a{
+
+  color: #333;
+}
+
+.navigation ul li a .icon{
+
+  position: relative;
+  display: block;
+  min-width: 60px;
+  height: 100px;
+  text-align: center;
+}
+
+.navigation ul li a .icon .title{
+
+  position: relative;
+  display: block;
+  padding-left: 10px;
+  height: 60px;
+  white-space: normal;
+}
+
+
+.toggle{
+
+    position: fixed;
+    top: 20px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background: #7579ff;
+    border-radius: 10px;
+    cursor: pointer;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.toggle.active{
+
+ background: red;
+}
+
+.toggle ion-icon{
+
+  position: absolute;
+  color: white;
+  font-size: 34px;
+  display: none;
+}
+
+.toggle ion-icon.open,
+.toggle.active ion-icon.close{
+
+  display: block;
+
+}
+
+.toggle.active ion-icon.open,
+.toggle ion-icon.close{
+
+  display: none;
+}
+
+
+
+
+
+
+
+
+
+
 /*FOR BOUNCE TEXT ANIMATION - WINNER ANNOUNCEMENT! */
 
 section#bounce {
