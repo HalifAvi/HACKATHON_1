@@ -87,6 +87,18 @@ div#rowContainer{
 	grid-template-rows: repeat(7,1fr);
 } 
 
+div#col2{
+
+  position: fixed;
+  top: 5px;
+  right:40px;
+  font-size: 120px;
+  font-family: 'Balsamiq Sans', cursive;
+  color: #FFFCAA;
+  filter: drop-shadow(-3px -3px 2px rgba(255,255,255,0.3))
+          drop-shadow(5px 5px 5px rgba(0,0,0,0.2))
+          drop-shadow(15px 15px 15px rgba(0,0,0,0.2))
+}
 
 
 /*FOR BOUNCE TEXT ANIMATION - WINNER ANNOUNCEMENT! */

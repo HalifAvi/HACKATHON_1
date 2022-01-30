@@ -1,11 +1,11 @@
 /**************************GLOBAL VARIABELS******************************/
 
+let intervalBanner;
 let puzzlePiecesArr = [];
 let puzzlePieceNum = 0;
 let imageNumToDisplay;
+let whereToAppendTimer;
 let whereToAppendPuzzleBoard = document.querySelector("#col1");
-
-
 
 
 /**************************GLOBAL CONST VARIABELS******************************/
@@ -19,16 +19,12 @@ const levels = [{level: "easy", rank: 3, numOfPieces: 9},
 // Update the user inputs 
 const userLevel = localStorage.getItem("userLevel").trim();
 const category = localStorage.getItem("userCategory").trim();
-let winnerAnnouncement;
+let announcement = '';
 
 if(localStorage.getItem("userName") !== null){
 
     const userName = (localStorage.getItem("userName").trim()).toUpperCase();
-    winnerAnnouncement = `${userName}YOUWIN!`
-}
-else{
-
-    winnerAnnouncement = `YOUWIN!`
+    announcement = `${userName}`
 }
 
 
@@ -73,55 +69,107 @@ const announceWhenUserCompleteThePuzzle = () => {
 
         makePicecsDisableToMove();
         startConfetti();       
-        turnOnWinnerAudio();    
-        displayWinnerAnnouncement();
+        // turnOnWinnerAudio();    
+        displayAnnouncementIfWinnerOrNot(announcement+'YOUWIN!');
     }
 }
+
+
+// This function tell the user he lose the game cause time over
+// const announceWhenUserLose = () => {
+
+//     if(isUserFinishThePuzzle()){
+
+//         makePicecsDisableToMove();
+//         startConfetti();       
+//         // turnOnWinnerAudio();    
+//         displayAnnouncementIfWinnerOrNot(announcement+'YOUWIN!');
+//     }
+// }
+
+
+// This function starts the cound down and display to the user
+const startTimer = () => {
+
+    let sec = 20;
+    whereToAppendTimer = document.querySelector('#col2');
+
+    intervalBanner = setInterval(function(){
+
+        if(sec >= 10){
+
+            whereToAppendTimer.innerHTML = '00 : ' + sec;
+        }
+        else{
+
+            whereToAppendTimer.innerHTML = '00 : 0' + sec;
+        }
+
+        sec--;
+
+        if(sec<0){
+
+            clearInterval(intervalBanner);
+            whereToAppendTimer.innerHTML = '00 : 00'
+            makePicecsDisableToMove();
+            whereToAppendTimer.innerHTML= ""; // remove timer
+
+            if(!isUserFinishThePuzzle()){ // In case the time over and the user didn't complete the puzzle
+
+                displayAnnouncementIfWinnerOrNot(announcement+'YOULOSE:(');
+            }
+        }
+    }, 1000);
+}
+
 
 
 // This function turn on the audio when the user win and complete the puzzle
-const turnOnWinnerAudio = () => {
+// const turnOnWinnerAudio = () => {
 
 
-    // let mp3Source = document.createElement('source');
+//     // let mp3Source = document.createElement('source');
 
 
     
-    window.onload = function(){
+//     window.onload = function(){
 
-       document.getElementById("applause").play();
-    }
+//        document.getElementById("applause").play();
+//     }
 
-    // mp3Audio.setAttribute('muted','true');
-    // mp3Audio.play();
-    // mp3Audio.setAttribute('muted','false');
-    // mp3Audio.play();
+//     // mp3Audio.setAttribute('muted','true');
+//     // mp3Audio.play();
+//     // mp3Audio.setAttribute('muted','false');
+//     // mp3Audio.play();
     
-}
+// }
 
 
-// This function display message about the winner 
-const displayWinnerAnnouncement = () => {
+// This function display message if user is a winner or not
+const displayAnnouncementIfWinnerOrNot = strToDisplay => {
 
     let h1 = document.createElement('h1');
 
-    setAnimationToEachLetter(h1);
+    setAnimationToEachLetter(h1, strToDisplay);
+
+    whereToAppendTimer.innerHTML = " "; // Remove timer cause the user won
+    clearInterval(intervalBanner);
 
     whereToAppendPuzzleBoard.appendChild(h1);
 }
 
 
 // This function set bounce animation for each letter in sentence
-const setAnimationToEachLetter = (whereToAppend) => {
+const setAnimationToEachLetter = (whereToAppend, strToDisplay) => {
 
-    for(let i=0; i<winnerAnnouncement.length; i++){
+    for(let i=0; i<strToDisplay.length; i++){
 
         let span = document.createElement('span');
-        let txtNode = document.createTextNode(winnerAnnouncement[i]);
+        let txtNode = document.createTextNode(strToDisplay[i]);
         span.appendChild(txtNode);
         whereToAppend.appendChild(span);
 
-        if(i !== winnerAnnouncement.length-1){
+        if(i !== strToDisplay.length-1){
 
             let span2 = document.createElement('span');
             let txtNode2 = document.createTextNode("-");
@@ -387,8 +435,10 @@ const setGridAccordingToLevel = whereToAppendPuzzleBoard => {
 /**************************START OF PROGRAM**************************************/
 
 displayPuzzleBoardGame();
+startTimer();
 announceWhenUserCompleteThePuzzle();
 
 
-turnOnWinnerAudio();
+// turnOnWinnerAudio();
+
 
