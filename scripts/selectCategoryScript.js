@@ -53,9 +53,27 @@ const startTheGame = () => {
 }
 
 
+// When the user press on approve your details so keep user name for the next screen
+const keepUserName = () => {
+
+    let userName = document.querySelector('input#yourName').value;
+
+    // Remove inputs from text area
+    document.querySelector('input#yourName').value = "";
+    document.querySelector('input#yourEmail').value = "";
+
+    localStorage.setItem("userName", userName); 
+}
+
+
 
 let startTheGameBtt = document.querySelector('button#startGameBtt');
 startTheGameBtt.addEventListener('click', startTheGame);
+
+
+let approveDetailBtt = document.querySelector('button#approveDetailsBtt');
+approveDetailBtt.addEventListener('click', keepUserName);
+
 
 
 
