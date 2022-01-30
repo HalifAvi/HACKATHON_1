@@ -34,7 +34,7 @@
     position: relative;
     width: 900px;
     height: 100vh;
-    background: #7689A9;
+    background: #7579ff;
     box-shadow: 0 0 10px #FFFCAA, 0 0 40px #D4D16A, 0 0 80px #AAA639;
   }
   
@@ -97,7 +97,7 @@
     text-transform: uppercase;
     font-weight: 600;
     font-family: 'Nunito', sans-serif;
-    background: -webkit-linear-gradient(left, #7579ff, #b224ef);
+    background: -webkit-linear-gradient(left, red, #b224ef);
   }
   
   .submit:hover{
