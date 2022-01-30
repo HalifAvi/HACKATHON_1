@@ -1,13 +1,13 @@
 /**************************GLOBAL VARIABELS******************************/
 
+let sec = 20;
+let howManyTimePressed = 3;
+let intervalBanner;
 let puzzlePiecesArr = [];
 let puzzlePieceNum = 0;
 let imageNumToDisplay;
+let whereToAppendTimer;
 let whereToAppendPuzzleBoard = document.querySelector("#col1");
-
-
-
-
 
 
 /**************************GLOBAL CONST VARIABELS******************************/
@@ -21,7 +21,13 @@ const levels = [{level: "easy", rank: 3, numOfPieces: 9},
 // Update the user inputs 
 const userLevel = localStorage.getItem("userLevel").trim();
 const category = localStorage.getItem("userCategory").trim();
+let announcement = '';
 
+if(localStorage.getItem("userName") !== null){
+
+    const userName = (localStorage.getItem("userName").trim()).toUpperCase();
+    announcement = `${userName}`
+}
 
 
 
@@ -64,7 +70,121 @@ const announceWhenUserCompleteThePuzzle = () => {
     if(isUserFinishThePuzzle()){
 
         makePicecsDisableToMove();
-        startConfetti();           
+        startConfetti();       
+        // turnOnWinnerAudio();    
+        displayAnnouncementIfWinnerOrNot(announcement+'YOUWIN!');
+    }
+}
+
+
+// This function starts the cound down and display to the user
+const startTimer = () => {
+
+    whereToAppendTimer = document.querySelector('#col2');
+
+    intervalBanner = setInterval(function(){
+
+        if(sec >= 10){
+
+            whereToAppendTimer.innerHTML = '00 : ' + sec;
+        }
+        else{
+
+            whereToAppendTimer.innerHTML = '00 : 0' + sec;
+        }
+
+        sec--;
+
+        if(sec<0){
+
+            clearInterval(intervalBanner);
+            whereToAppendTimer.innerHTML = '00 : 00'
+            makePicecsDisableToMove();
+            whereToAppendTimer.innerHTML= ""; // remove timer
+
+            if(!isUserFinishThePuzzle()){ // In case the time over and the user didn't complete the puzzle
+
+                displayAnnouncementIfWinnerOrNot(announcement+'YOULOSE:(');
+            }
+        }
+    }, 1000);
+}
+
+// This function handle the all set for nav bar
+const setNavBar = () => {
+
+    setNavBarMarkedCategories();
+    setInteractionBetweenXandNavBar();
+
+}
+
+
+const setInteractionBetweenXandNavBar = () => {
+
+    let menuToggle = document.querySelector('.toggle');
+    let navigation = document.querySelector('.navigation')
+
+    menuToggle.onclick = function() {
+
+        menuToggle.classList.toggle('active');
+        navigation.classList.toggle('active');
+    }
+}
+
+
+// This function set white mark when mouse hover the nav bar categories
+const setNavBarMarkedCategories = () => {
+
+    let list = document.querySelectorAll('.list');
+    
+    for(let i=0; i< list.length; i++){
+
+        list[i].onmouseover = function() {
+
+            let j = 0;
+            
+            while(j < list.length){
+
+                list[j++].className = 'list';
+            }
+        
+            list[i].className = 'list active';
+        }
+    }
+}
+
+
+// This function display message if user is a winner or not
+const displayAnnouncementIfWinnerOrNot = strToDisplay => {
+
+    let h1 = document.createElement('h1');
+
+    setAnimationToEachLetter(h1, strToDisplay);
+
+    whereToAppendTimer.innerHTML = " "; // Remove timer cause the user won
+    clearInterval(intervalBanner);
+
+    whereToAppendPuzzleBoard.appendChild(h1);
+}
+
+
+// This function set bounce animation for each letter in sentence
+const setAnimationToEachLetter = (whereToAppend, strToDisplay) => {
+
+    for(let i=0; i<strToDisplay.length; i++){
+
+        let span = document.createElement('span');
+        let txtNode = document.createTextNode(strToDisplay[i]);
+        span.appendChild(txtNode);
+        whereToAppend.appendChild(span);
+
+        if(i !== strToDisplay.length-1){
+
+            let span2 = document.createElement('span');
+            let txtNode2 = document.createTextNode("-");
+            span2.appendChild(txtNode2);
+            whereToAppend.appendChild(span2);
+        }
     }
 }
 
@@ -185,6 +305,16 @@ const isUserFinishThePuzzle = () => {
 const removePuzzlePiecesDivsFromMainDiv = () =>{
 
     whereToAppendPuzzleBoard.innerHTML = '';
+}
+
+
+const addToTimer10Sec = () => {
+
+    if(sec !==0 && howManyTimePressed > 0){
+
+        sec += 10;
+        howManyTimePressed--;
+    }
 }
 
 
@@ -324,8 +454,11 @@ const setGridAccordingToLevel = whereToAppendPuzzleBoard => {
 /**************************START OF PROGRAM**************************************/
 
 displayPuzzleBoardGame();
+setNavBar();
+startTimer();
 announceWhenUserCompleteThePuzzle();
 
 
+// turnOnWinnerAudio();
 
 
