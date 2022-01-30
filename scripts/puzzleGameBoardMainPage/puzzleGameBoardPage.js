@@ -6,6 +6,10 @@ let imageNumToDisplay;
 let whereToAppendPuzzleBoard = document.querySelector("#col1");
 
 
+
+
+
+
 /**************************GLOBAL CONST VARIABELS******************************/
 
 const numOfImgsInEachCategory = 2;
@@ -14,8 +18,10 @@ const levels = [{level: "easy", rank: 3, numOfPieces: 9},
                 {level: "hard", rank: 7, numOfPieces: 49}];
 
 
-const userLevel = "easy";
-const category = "food";
+// Update the user inputs 
+const userLevel = localStorage.getItem("userLevel").trim();
+const category = localStorage.getItem("userCategory").trim();
+
 
 
 
@@ -186,6 +192,7 @@ const removePuzzlePiecesDivsFromMainDiv = () =>{
 const displayPuzzleBoardGame = () => {
 
     imageNumToDisplay = getRandomImageToDisplay();
+ 
     let numOfRowsAndCols = (levels.find(obj => obj.level === userLevel)).rank
 
     for(let i=0; i<numOfRowsAndCols; i++) {

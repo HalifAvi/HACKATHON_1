@@ -2,10 +2,7 @@
 
 let takeToCategoryChoiseScreen = () => {
 
-
-
-    console.log(event.target)
-
+    location.href = "file:///C:/Users/avi/Desktop/HACKATHON_1/html/selectCategory.html";
 }
 
 
@@ -16,11 +13,16 @@ let changeIconColor = () => {
 
 
 let puzzleIcon = document.getElementById('puzzleIcon');
-console.log(puzzleIcon)
 
-puzzleIcon.addEventListener('mouseover', changeIconColor)
-puzzleIcon.addEventListener('mouseout', changeIconColor)
-puzzleIcon.addEventListener('click', takeToCategoryChoiseScreen)
+if(puzzleIcon !== null){
+
+puzzleIcon.addEventListener('mouseover', changeIconColor);
+puzzleIcon.addEventListener('mouseout', changeIconColor);
+puzzleIcon.addEventListener('click', takeToCategoryChoiseScreen);
+}
+
+
+
 
 
 
