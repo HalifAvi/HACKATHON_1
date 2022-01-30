@@ -8,8 +8,6 @@ let whereToAppendPuzzleBoard = document.querySelector("#col1");
 
 
 
-
-
 /**************************GLOBAL CONST VARIABELS******************************/
 
 const numOfImgsInEachCategory = 2;
@@ -21,8 +19,9 @@ const levels = [{level: "easy", rank: 3, numOfPieces: 9},
 // Update the user inputs 
 const userLevel = localStorage.getItem("userLevel").trim();
 const category = localStorage.getItem("userCategory").trim();
+const userName = (localStorage.getItem("userName").trim()).toUpperCase();
 
-
+let winnerAnnouncement = `${userName}YOUWIN!`
 
 
 /**************************EVENTS FUNCTIONS******************************/
@@ -65,6 +64,39 @@ const announceWhenUserCompleteThePuzzle = () => {
 
         makePicecsDisableToMove();
         startConfetti();           
+        displayWinnerAnnouncement();
+    }
+}
+
+
+// This function display message about the winner 
+const displayWinnerAnnouncement = () => {
+
+    let h1 = document.createElement('h1');
+
+    setAnimationToEachLetter(h1);
+
+    whereToAppendPuzzleBoard.appendChild(h1);
+}
+
+
+// This function set bounce animation for each letter in sentence
+const setAnimationToEachLetter = (whereToAppend) => {
+
+    for(let i=0; i<winnerAnnouncement.length; i++){
+
+        let span = document.createElement('span');
+        let txtNode = document.createTextNode(winnerAnnouncement[i]);
+        span.appendChild(txtNode);
+        whereToAppend.appendChild(span);
+
+        if(i !== winnerAnnouncement.length-1){
+
+            let span2 = document.createElement('span');
+            let txtNode2 = document.createTextNode("-");
+            span2.appendChild(txtNode2);
+            whereToAppend.appendChild(span2);
+        }
     }
 }
 
@@ -325,7 +357,3 @@ const setGridAccordingToLevel = whereToAppendPuzzleBoard => {
 
 displayPuzzleBoardGame();
 announceWhenUserCompleteThePuzzle();
-
-
-
-
