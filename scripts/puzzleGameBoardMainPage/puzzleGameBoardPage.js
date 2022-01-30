@@ -19,9 +19,18 @@ const levels = [{level: "easy", rank: 3, numOfPieces: 9},
 // Update the user inputs 
 const userLevel = localStorage.getItem("userLevel").trim();
 const category = localStorage.getItem("userCategory").trim();
-const userName = (localStorage.getItem("userName").trim()).toUpperCase();
+let winnerAnnouncement;
 
-let winnerAnnouncement = `${userName}YOUWIN!`
+if(localStorage.getItem("userName") !== null){
+
+    const userName = (localStorage.getItem("userName").trim()).toUpperCase();
+    winnerAnnouncement = `${userName}YOUWIN!`
+}
+else{
+
+    winnerAnnouncement = `YOUWIN!`
+}
+
 
 
 /**************************EVENTS FUNCTIONS******************************/
@@ -63,9 +72,31 @@ const announceWhenUserCompleteThePuzzle = () => {
     if(isUserFinishThePuzzle()){
 
         makePicecsDisableToMove();
-        startConfetti();           
+        startConfetti();       
+        turnOnWinnerAudio();    
         displayWinnerAnnouncement();
     }
+}
+
+
+// This function turn on the audio when the user win and complete the puzzle
+const turnOnWinnerAudio = () => {
+
+
+    // let mp3Source = document.createElement('source');
+
+
+    
+    window.onload = function(){
+
+       document.getElementById("applause").play();
+    }
+
+    // mp3Audio.setAttribute('muted','true');
+    // mp3Audio.play();
+    // mp3Audio.setAttribute('muted','false');
+    // mp3Audio.play();
+    
 }
 
 
@@ -357,3 +388,7 @@ const setGridAccordingToLevel = whereToAppendPuzzleBoard => {
 
 displayPuzzleBoardGame();
 announceWhenUserCompleteThePuzzle();
+
+
+turnOnWinnerAudio();
+
