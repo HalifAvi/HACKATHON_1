@@ -2,28 +2,16 @@
 
 html, body{
 
-    background-color: blanchedalmond; 
+    margin: 0;
+    padding: 0;
 }
 
-.bg-black{
+div#rowContainer{
 
-    background-color: black;
+    box-shadow: 0 0 10px #FFFCAA, 0 0 40px #D4D16A, 0 0 80px #AAA639;
+    width: 900px;
 }
 
-.bg-coral{
-
-    background-color: coral;
-}
-
-.bg-powderblue{
-
-    background-color: powderblue;
-}
-
-.bg-plum{
-
-    background-color: plum;
-}
 
 .puzzlePieceBeforeWin{
 
@@ -66,13 +54,13 @@ html, body{
 
 .mediumLevelSizePuzzlePiece{
 
-    width: 200px; 
+    width: 180px; 
     height: 120px; 
 }
 
 .hardLevelSizePuzzlePiece{
 
-    width: 150px; 
+    width: 130px; 
     height: 100px; 
 }
 
@@ -90,9 +78,6 @@ html, body{
     display: grid;
 	grid-template-columns: repeat(5,1fr);
 	grid-template-rows: repeat(5,1fr);
-    /* margin: 10px; */
-	/* width: 50px;
-	height: 50px; */
 }
 
 #hardPuzzleGridBoard{
