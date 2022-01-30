@@ -1,5 +1,7 @@
 /**************************GLOBAL VARIABELS******************************/
 
+let sec = 20;
+let howManyTimePressed = 3;
 let intervalBanner;
 let puzzlePiecesArr = [];
 let puzzlePieceNum = 0;
@@ -75,23 +77,9 @@ const announceWhenUserCompleteThePuzzle = () => {
 }
 
 
-// This function tell the user he lose the game cause time over
-// const announceWhenUserLose = () => {
-
-//     if(isUserFinishThePuzzle()){
-
-//         makePicecsDisableToMove();
-//         startConfetti();       
-//         // turnOnWinnerAudio();    
-//         displayAnnouncementIfWinnerOrNot(announcement+'YOUWIN!');
-//     }
-// }
-
-
 // This function starts the cound down and display to the user
 const startTimer = () => {
 
-    let sec = 20;
     whereToAppendTimer = document.querySelector('#col2');
 
     intervalBanner = setInterval(function(){
@@ -317,6 +305,16 @@ const isUserFinishThePuzzle = () => {
 const removePuzzlePiecesDivsFromMainDiv = () =>{
 
     whereToAppendPuzzleBoard.innerHTML = '';
+}
+
+
+const addToTimer10Sec = () => {
+
+    if(sec !==0 && howManyTimePressed > 0){
+
+        sec += 10;
+        howManyTimePressed--;
+    }
 }
 
 
